@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SDD en la Era de la IA — Investigación Exhaustiva</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;800&family=JetBrains+Mono:wght@300;400;600&display=swap');
+
+  :root {
+    --bg: #0a0b0f;
+    --surface: #111318;
+    --border: #1e2130;
+    --accent: #5b6bff;
+    --accent2: #ff5b8d;
+    --accent3: #5bffb0;
+    --accent4: #ffb35b;
+    --accent5: #bf5bff;
+    --text: #e8eaf0;
+    --muted: #9f9abb;
+    --glow: rgba(91, 107, 255, 0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  header {
+    text-align: center;
+    padding: 3rem 2rem 1.5rem;
+    position: relative;
+  }
+  header::after {
+    content: '';
+    display: block;
+    width: 120px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    margin: 1rem auto 0;
+    border-radius: 2px;
+  }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 800;
+    line-height: 1.1;
+  }
+  h1 span { color: var(--accent); }
+  .subtitle {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 0.75rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* LEYENDA */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: center;
+    padding: 1.2rem 2rem;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin: 1.5rem 2rem;
+  }
+  .leg-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .leg-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  /* GRID PRINCIPAL */
+  .map {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem 2rem 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* NODO CENTRAL */
+  .center-node {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, #13163a 0%, #1a1040 100%);
+    border: 1px solid var(--accent);
+    border-radius: 16px;
+    padding: 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 60px var(--glow);
+  }
+  .center-node::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(91,107,255,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .center-node .tag {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    padding: 0.25rem 0.7rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .center-node h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+  }
+  .center-node p {
+    font-size: 0.78rem;
+    color: #8a90b8;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+  .center-meta {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .meta-pill {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+  .meta-pill strong { color: var(--text); display: block; font-size: 0.8rem; margin-bottom: 0.1rem; }
+
+  /* CARDS */
+  .section-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .section-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  }
+  .section-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 12px 12px 0 0;
+  }
+  .c1::before { background: var(--accent); }
+  .c2::before { background: var(--accent2); }
+  .c3::before { background: var(--accent3); }
+  .c4::before { background: var(--accent4); }
+  .c5::before { background: var(--accent5); }
+  .c6::before { background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+  .c7::before { background: linear-gradient(90deg, var(--accent3), var(--accent4)); }
+  .c8::before { background: linear-gradient(90deg, var(--accent5), var(--accent)); }
+  .c9::before { background: linear-gradient(90deg, var(--accent2), var(--accent5)); }
+
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    margin-bottom: 1.2rem;
+  }
+  .section-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .section-meta { flex: 1; }
+  .section-num {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 0.2rem;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  /* ITEMS */
+  .items { display: flex; flex-direction: column; gap: 0.9rem; }
+  .item { border-left: 2px solid var(--border); padding-left: 0.75rem; }
+  .item-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+  .item-desc { font-size: 0.68rem; color: var(--muted); line-height: 1.6; }
+
+  /* BADGES */
+  .item-badge {
+    font-size: 0.55rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 20px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .badge-hist  { background: rgba(91,107,255,0.15); color: var(--accent); border: 1px solid rgba(91,107,255,0.3); }
+  .badge-def   { background: rgba(91,255,176,0.12); color: var(--accent3); border: 1px solid rgba(91,255,176,0.3); }
+  .badge-nivel { background: rgba(255,179,91,0.12); color: var(--accent4); border: 1px solid rgba(255,179,91,0.3); }
+  .badge-fase  { background: rgba(191,91,255,0.12); color: var(--accent5); border: 1px solid rgba(191,91,255,0.3); }
+  .badge-tool  { background: rgba(255,91,141,0.12); color: var(--accent2); border: 1px solid rgba(255,91,141,0.3); }
+  .badge-stat  { background: rgba(91,255,176,0.12); color: var(--accent3); border: 1px solid rgba(91,255,176,0.3); }
+  .badge-vs    { background: rgba(91,107,255,0.15); color: var(--accent); border: 1px solid rgba(91,107,255,0.3); }
+  .badge-risk  { background: rgba(255,91,141,0.15); color: var(--accent2); border: 1px solid rgba(255,91,141,0.3); }
+  .badge-fut   { background: rgba(191,91,255,0.12); color: var(--accent5); border: 1px solid rgba(191,91,255,0.3); }
+
+  /* SUBITEMS */
+  .subitems {
+    display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.4rem;
+  }
+  .subitem {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 0.6rem;
+    padding: 0.15rem 0.5rem;
+    color: var(--muted);
+  }
+
+  /* TABLA COMPARATIVA */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.62rem;
+    margin-top: 0.8rem;
+  }
+  .compare-table th {
+    background: rgba(91,107,255,0.12);
+    color: var(--accent);
+    padding: 0.45rem 0.6rem;
+    text-align: left;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  .compare-table td {
+    padding: 0.4rem 0.6rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table tr:hover td { background: rgba(255,255,255,0.02); color: var(--text); }
+  .highlight-row td { color: var(--accent3) !important; }
+
+  /* STAT BOXES */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+    margin-top: 0.8rem;
+  }
+  .stat-box {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.7rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--accent3);
+    display: block;
+  }
+  .stat-label { font-size: 0.6rem; color: var(--muted); letter-spacing: 0.05em; margin-top: 0.2rem; }
+
+  /* FLOW NOTE */
+  .flow-note {
+    grid-column: 1 / -1;
+    background: rgba(91,107,255,0.06);
+    border: 1px solid rgba(91,107,255,0.2);
+    border-radius: 10px;
+    padding: 1.2rem 1.5rem;
+    font-size: 0.7rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .flow-note strong { color: var(--accent); }
+
+  /* TIMELINE */
+  .timeline {
+    grid-column: 1 / -1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  .timeline h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+  .tl-row {
+    display: flex;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+  }
+  .tl-block {
+    flex: 1;
+    min-width: 100px;
+    border-radius: 8px;
+    padding: 0.7rem 0.6rem;
+    font-size: 0.6rem;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.5;
+  }
+  .tl-block strong { display: block; font-size: 0.65rem; margin-bottom: 0.2rem; color: #fff; }
+  .t1 { background: rgba(91,107,255,0.18); }
+  .t2 { background: rgba(255,91,141,0.15); }
+  .t3 { background: rgba(91,255,176,0.13); }
+  .t4 { background: rgba(255,179,91,0.14); }
+  .t5 { background: rgba(191,91,255,0.14); }
+
+  /* PLANTUML CODE BLOCK */
+  .code-block {
+    background: #0d0f1a;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.8rem;
+    margin-top: 0.6rem;
+    font-size: 0.6rem;
+    color: var(--accent3);
+    line-height: 1.7;
+    overflow-x: auto;
+    white-space: pre;
+  }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Investigación Exhaustiva · 2025–2026</div>
+  <h1>La Institucionalización del <span>Intento</span></h1>
+  <p class="subtitle">Spec-Driven Development en el Ecosistema de Startups y la Era de la IA</p>
+</header>
+
+<div class="legend">
+  <div class="leg-item"><div class="leg-dot" style="background:var(--accent)"></div>Fundamentos</div>
+  <div class="leg-item"><div class="leg-dot" style="background:var(--accent2)"></div>Crisis / Problema</div>
+  <div class="leg-item"><div class="leg-dot" style="background:var(--accent3)"></div>Modelo de Madurez</div>
+  <div class="leg-item"><div class="leg-dot" style="background:var(--accent4)"></div>Ciclo de Vida</div>
+  <div class="leg-item"><div class="leg-dot" style="background:var(--accent5)"></div>Herramientas</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#fff"></div>ROI / Impacto</div>
+</div>
+
+<div class="map">
+
+  <!-- NODO CENTRAL -->
+  <div class="center-node">
+    <div class="tag">Paradigma Central</div>
+    <h2>Spec-Driven Development (SDD)</h2>
+    <p>El SDD invierte la jerarquía tradicional de los artefactos de software: la especificación no es documentación pasiva, sino el <strong>núcleo ejecutable y única fuente de verdad</strong> de la que el código se deriva y contra la cual se valida de forma continua. Para las startups que operan bajo presiones extremas, representa la diferencia entre aceleración sostenible y colapso bajo deuda técnica generada algorítmicamente.</p>
+    <div class="center-meta">
+      <div class="meta-pill"><strong>Origen</strong>NASA Mercury, 1960s</div>
+      <div class="meta-pill"><strong>Síntesis formal</strong>TDD + DbC, 2004</div>
+      <div class="meta-pill"><strong>Era actual</strong>LLMs + Agentes, 2024–</div>
+      <div class="meta-pill"><strong>Estado</strong>Infraestructura ejecutable</div>
+    </div>
+  </div>
+
+  <!-- BLOQUE 1: HISTORIA -->
+  <div class="section-card c1">
+    <div class="section-header">
+      <div class="section-icon">📜</div>
+      <div class="section-meta">
+        <div class="section-num">Bloque 01 · Historia</div>
+        <div class="section-title">Fundamentos Históricos y Evolución del Rigor</div>
+      </div>
+    </div>
+    <div class="items">
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-hist">1960s</span>Proyecto Mercury – NASA</div>
+        <div class="item-desc">Pruebas primero por costo catastrófico de fallos en misión. Los ingenieros redactaban procedimientos de prueba formales antes de autorizar una línea de código.</div>
+      </div>
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-hist">2004</span>Síntesis TDD + DbC</div>
+        <div class="item-desc">Convergencia del Desarrollo Guiado por Pruebas (verificación funcional) y el Diseño por Contrato (invariantes universales) en el marco unificado de SDD.</div>
+      </div>
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-hist">2024–hoy</span>Era de la IA generativa</div>
+        <div class="item-desc">Las especificaciones se convierten en "infraestructuras ejecutables". El código fuente es un subproducto transitorio y reemplazable de la spec.</div>
+      </div>
+    </div>
+    <table class="compare-table" style="margin-top:1rem">
+      <tr><th>Metodología</th><th>Artefacto</th><th>Era</th></tr>
+      <tr><td>Cascada</td><td>Documentación estática</td><td>1970–1990</td></tr>
+      <tr><td>Agile / TDD</td><td>Suite de pruebas</td><td>2000–2015</td></tr>
+      <tr><td>BDD</td><td>Gherkin features</td><td>2010–2020</td></tr>
+      <tr class="highlight-row"><td><strong>SDD</strong></td><td>Spec formal ejecutable</td><td>2024–hoy</td></tr>
+    </table>
+  </div>
+
+  <!-- BLOQUE 2: CRISIS DEL VIBE CODING -->
+  <div class="section-card c2">
+    <div class="section-header">
+      <div class="section-icon">⚡</div>
+      <div class="section-meta">
+        <div class="section-num">Bloque 02 · El Problema</div>
+        <div class="section-title">La Crisis del "Vibe Coding"</div>
+      </div>
+    </div>
+    <div class="items">
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-risk">riesgo</span>¿Qué es el vibe coding?</div>
+        <div class="item-desc">Iteración con asistentes de IA mediante prompts vagos sin planificación previa. Permite prototipación rápida, pero genera sistemas estructuralmente frágiles con deriva arquitectónica.</div>
+      </div>
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-risk">dato crítico</span>+41% complejidad sin dirección</div>
+        <div class="item-desc">El código aumenta un 41% en complejidad cuando no hay una dirección clara dada a los modelos de IA.</div>
+      </div>
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-risk">dato crítico</span>90%+ vulnerabilidades inyectadas</div>
+        <div class="item-desc">Los modelos inyectan vulnerabilidades en más del 90% de sus salidas si no están sujetos a restricciones arquitectónicas estrictas.</div>
+      </div>
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-def">solución</span>SDD como "constitución"</div>
+        <div class="item-desc">Convierte el intento ambiguo en una especificación estructurada y revisable. La IA pasa de instrucciones tácticas a un diálogo estratégico gobernado por la spec.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOQUE 3: MODELO DE MADUREZ -->
+  <div class="section-card c3">
+    <div class="section-header">
+      <div class="section-icon">📈</div>
+      <div class="section-meta">
+        <div class="section-num">Bloque 03 · Madurez</div>
+        <div class="section-title">Modelo de Madurez de SDD — 3 Niveles</div>
+      </div>
+    </div>
+    <div class="items">
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-nivel">Nivel 1</span>Spec-First · Especificación Primero</div>
+        <div class="item-desc">Se redacta la spec antes de codificar. Una vez que el código funciona, la spec puede quedar desactualizada ("podredumbre de contexto"). Punto de entrada más común.</div>
+      </div>
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-nivel">Nivel 2</span>Spec-Anchored · Especificación Anclada</div>
+        <div class="item-desc">La spec es un artefacto vivo y versionado junto al código. Los agentes de IA la usan como ancla permanente para refactorizaciones. Vital en microservicios.</div>
+      </div>
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-nivel">Nivel 3</span>Spec-as-Source · Especificación como Fuente</div>
+        <div class="item-desc">Los humanos nunca editan el código directamente. La spec ES el código fuente. El LLM actúa como compilador. Sincronización absoluta, cero derivas manuales.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOQUE 4: CICLO DE VIDA -->
+  <div class="section-card c4">
+    <div class="section-header">
+      <div class="section-icon">🔄</div>
+      <div class="section-meta">
+        <div class="section-num">Bloque 04 · Ciclo de Vida</div>
+        <div class="section-title">Las 5 Fases del Flujo SDD</div>
+      </div>
+    </div>
+    <div class="items">
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-fase">Fase 1</span>Specify — Especificación</div>
+        <div class="item-desc">Define el "qué". Contexto de negocio, necesidades del usuario y criterios de éxito sin prescribir detalles técnicos. Resultado: artefacto ejecutable.</div>
+      </div>
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-fase">Fase 2</span>Plan — Planificación</div>
+        <div class="item-desc">Introduce el "cómo". Stack tecnológico, arquitectura, restricciones. La IA traduce la spec funcional en plan técnico con esquemas de BD y límites de componentes.</div>
+      </div>
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-fase">Fase 3</span>Tasks — Descomposición</div>
+        <div class="item-desc">El plan técnico se divide en unidades atómicas, aisladas y verificables. Cada tarea debe ser ejecutable por IA con alta precisión (granularidad TDD).</div>
+      </div>
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-fase">Fase 4</span>Implement — Implementación</div>
+        <div class="item-desc">Agentes de IA ejecutan tareas bajo las restricciones de la spec. El código generado es funcionalmente correcto y adhiere a los patrones sistémicos predefinidos.</div>
+      </div>
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-fase">Fase 5</span>Validate — Detección de Deriva</div>
+        <div class="item-desc">Puertas de validación activa: si el código viola alguna restricción (ej. omitir validación de seguridad), el pipeline falla. La corrección se realiza en la spec, no en el código.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOQUE 5: PLANTUML + CONTRATOS -->
+  <div class="section-card c5">
+    <div class="section-header">
+      <div class="section-icon">🗂️</div>
+      <div class="section-meta">
+        <div class="section-num">Bloque 05 · Arquitectura</div>
+        <div class="section-title">Diagramas como Código y Contratos de Datos</div>
+      </div>
+    </div>
+    <div class="items">
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-tool">PlantUML</span>Diagramas formales versionables</div>
+        <div class="item-desc">No son ilustraciones estáticas; son representaciones formales del comportamiento que se pueden versionar y auditar. Permiten "diffs" visuales en pull requests.</div>
+        <div class="code-block">@startuml
+title Pipeline de Migración de Datos AWS
+actor Usuario
+entity "SQL Server" as sql
+entity "Amazon S3" as s3
+entity "AWS Lambda" as lambda
+entity "Glue ETL" as glue
+Usuario -> sql : Consulta de Datos
+sql -> glue : Extraer y Transformar
+glue -> s3 : Almacenar (Parquet)
+s3 -> glue : Cargar desde S3
+lambda -> config : Leer Configuración
+@enduml</div>
+      </div>
+    </div>
+    <table class="compare-table" style="margin-top:1rem">
+      <tr><th>Formato</th><th>Uso Principal</th><th>Ventaja SDD</th></tr>
+      <tr><td>OpenAPI</td><td>APIs RESTful</td><td>Genera docs + clientes automáticos</td></tr>
+      <tr><td>Protobuf</td><td>Microservicios</td><td>Seguridad de tipos fuerte</td></tr>
+      <tr><td>JSON Schema</td><td>APIs Web</td><td>Validación runtime sin compilación</td></tr>
+      <tr><td>AsyncAPI</td><td>Event-driven</td><td>Define sobre + payload de eventos</td></tr>
+    </table>
+  </div>
+
+  <!-- BLOQUE 6: SDD vs TDD vs BDD -->
+  <div class="section-card c6">
+    <div class="section-header">
+      <div class="section-icon">⚖️</div>
+      <div class="section-meta">
+        <div class="section-num">Bloque 06 · Comparativa</div>
+        <div class="section-title">SDD vs TDD vs BDD vs ATDD</div>
+      </div>
+    </div>
+    <div class="items">
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-vs">TDD</span>Test-Driven Development</div>
+        <div class="item-desc">Disciplina a nivel de desarrollador. Responde "¿Cómo funciona esta función?" — corrección técnica de unidades aisladas.</div>
+      </div>
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-vs">BDD</span>Behavior-Driven Development</div>
+        <div class="item-desc">Valor de negocio y comportamiento de usuario (Gherkin). SDD integra BDD en la fase de spec, pero añade capas de planificación técnica.</div>
+      </div>
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-vs">ATDD</span>Acceptance Test-Driven Dev</div>
+        <div class="item-desc">Criterios de aceptación antes de codificar. SDD amplía esto usando esos criterios como guardrails para agentes de generación de código.</div>
+      </div>
+    </div>
+    <table class="compare-table" style="margin-top:1rem">
+      <tr><th>Atributo</th><th>TDD</th><th>BDD</th><th>SDD</th></tr>
+      <tr><td>Abstracción</td><td>Bajo</td><td>Alto</td><td>Sistémico</td></tr>
+      <tr><td>Participantes</td><td>Devs</td><td>Equipo completo</td><td>Arquit. + Devs + IA</td></tr>
+      <tr><td>Relación IA</td><td>Valida salida</td><td>Define objetivo</td><td>Gobierna proceso</td></tr>
+      <tr class="highlight-row"><td>Artefacto</td><td>Tests unitarios</td><td>Escenarios</td><td>Contratos ejecutables</td></tr>
+    </table>
+  </div>
+
+  <!-- BLOQUE 7: ROI -->
+  <div class="section-card c7">
+    <div class="section-header">
+      <div class="section-icon">💰</div>
+      <div class="section-meta">
+        <div class="section-num">Bloque 07 · Impacto Económico</div>
+        <div class="section-title">ROI en Startups — Datos 2025–2026</div>
+      </div>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-box"><span class="stat-num">50%</span><div class="stat-label">Reducción en tiempo de entrega (EY 2025)</div></div>
+      <div class="stat-box"><span class="stat-num">40%</span><div class="stat-label">Menos defectos con specs estructuradas</div></div>
+      <div class="stat-box"><span class="stat-num">90%+</span><div class="stat-label">Vulnerabilidades en LLMs sin restricciones</div></div>
+      <div class="stat-box"><span class="stat-num">20–40%</span><div class="stat-label">Mejora con bucle Self-Refine en IA</div></div>
+    </div>
+    <div class="items" style="margin-top:1rem">
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-stat">seguridad</span>SDD como barrera crítica</div>
+        <div class="item-desc">Los LLM generan código vulnerable entre 9.8% y 42.1%. Specs constitucionales con mapeos CWE explícitos reducen drásticamente este riesgo.</div>
+      </div>
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-stat">resultado</span>IA como colaborador disciplinado</div>
+        <div class="item-desc">El ROI se manifiesta en equipos más pequeños con menor supervisión manual: la IA pasa de experimento generativo a colaborador de ingeniería.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOQUE 8: HERRAMIENTAS -->
+  <div class="section-card c8">
+    <div class="section-header">
+      <div class="section-icon">🔧</div>
+      <div class="section-meta">
+        <div class="section-num">Bloque 08 · Herramientas</div>
+        <div class="section-title">Ecosistema de Validación SDD</div>
+      </div>
+    </div>
+    <div class="items">
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-tool">linting</span>Spectral — Gobernanza de Estilo</div>
+        <div class="item-desc">Linting de archivos YAML/OpenAPI. Asegura que todos los servicios sigan los mismos estándares de diseño y seguridad.</div>
+      </div>
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-tool">contratos</span>Pact — Verificación de Contratos</div>
+        <div class="item-desc">Garantiza que las implementaciones de API coincidan con las expectativas de los consumidores. Crucial en microservicios distribuidos.</div>
+      </div>
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-tool">seguridad</span>Cherrybomb — Auditoría de APIs</div>
+        <div class="item-desc">Escanea especificaciones de API en busca de vulnerabilidades antes de que se genere el código.</div>
+      </div>
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-tool">workflow</span>GitHub Spec Kit — Open Source</div>
+        <div class="item-desc">Toolkit que facilita las 4 fases SDD (especificar, planificar, tareas, implementar). Permite a los desarrolladores actuar como directores mientras la IA escribe.</div>
+      </div>
+    </div>
+    <div class="subitems" style="margin-top:1rem">
+      <div class="subitem">PlantUML</div>
+      <div class="subitem">OpenAPI / Swagger</div>
+      <div class="subitem">Protobuf</div>
+      <div class="subitem">AsyncAPI</div>
+      <div class="subitem">JSON Schema</div>
+      <div class="subitem">CI/CD Gateways</div>
+    </div>
+  </div>
+
+  <!-- BLOQUE 9: DESAFÍOS Y FUTURO -->
+  <div class="section-card c9">
+    <div class="section-header">
+      <div class="section-icon">🚀</div>
+      <div class="section-meta">
+        <div class="section-num">Bloque 09 · Desafíos y Futuro</div>
+        <div class="section-title">Limitaciones Reales y Orquestación Agéntica</div>
+      </div>
+    </div>
+    <div class="items">
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-risk">limitación</span>Inversión inicial alta</div>
+        <div class="item-desc">En fases de exploración o I+D donde los requisitos cambian diariamente, el rigor de la spec puede percibirse como carga excesiva.</div>
+      </div>
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-risk">limitación</span>Impuesto de mantenimiento</div>
+        <div class="item-desc">Mantener specs sincronizadas con código que evoluciona rápidamente puede generar "deuda de documentación" si no se automatiza.</div>
+      </div>
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-risk">limitación</span>Curva de aprendizaje</div>
+        <div class="item-desc">Los equipos deben aprender lenguajes de spec y diagramación (PlantUML), lo que puede ralentizar la velocidad inicial.</div>
+      </div>
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-fut">futuro</span>Orquestación Agéntica</div>
+        <div class="item-desc">Los agentes operan autónomamente dentro de directrices claras para alcanzar objetivos de negocio. El rol del ingeniero se desplaza hacia definición de intenciones y gobernanza de resultados.</div>
+      </div>
+      <div class="item">
+        <div class="item-label"><span class="item-badge badge-fut">conclusión</span>La spec como activo estratégico</div>
+        <div class="item-desc">La ventaja competitiva pertenece a quienes definan su intención con precisión. La industrialización del intento es la base de la ingeniería en la era de la autonomía algorítmica.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTA DE FLUJO -->
+  <div class="flow-note">
+    💡 <strong>Orden de estudio recomendado:</strong> Bloque 01 → 02 → 03 → 04 → 06 → 05 → 07 → 08 → 09<br>
+    Ancla primero el <strong>contexto histórico y el problema real</strong> antes de profundizar en arquitectura y herramientas. Los bloques de ROI y futuro cobran más sentido una vez que se entiende el modelo de madurez completo.
+  </div>
+
+  <!-- TIMELINE CICLO DE VIDA -->
+  <div class="timeline">
+    <h3>🔄 Ciclo de Vida SDD — Flujo de las 5 Fases</h3>
+    <div class="tl-row">
+      <div class="tl-block t1"><strong>Fase 1</strong>Specify<br>Qué + Contexto de negocio</div>
+      <div class="tl-block t2"><strong>Fase 2</strong>Plan<br>Cómo + Stack técnico</div>
+      <div class="tl-block t3"><strong>Fase 3</strong>Tasks<br>Descomposición atómica</div>
+      <div class="tl-block t4"><strong>Fase 4</strong>Implement<br>IA ejecuta bajo la spec</div>
+      <div class="tl-block t5"><strong>Fase 5</strong>Validate<br>Detección de deriva + fallo CI</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
